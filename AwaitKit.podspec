@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name             = 'AwaitKit'
-  s.version          = '5.2.0'
+  s.version          = '5.2.1'
   s.license          = 'MIT'
   s.summary          = 'The ES8 Async/Await control flow for Swift '
   s.homepage         = 'https://github.com/yannickl/AwaitKit.git'
   s.social_media_url = 'https://twitter.com/yannickloriot'
   s.authors          = { 'Yannick Loriot' => 'contact@yannickloriot.com' }
-  s.source           = { :git => 'https://github.com/yannickl/AwaitKit.git', :tag => s.version }
+  s.source           = { :git => 'https://github.com/cyupa89/AwaitKit.git', :tag => s.version }
   s.screenshot       = 'http://yannickloriot.com/resources/AwaitKit-Arista-Banner.png'
 
   s.ios.deployment_target     = '8.0'
