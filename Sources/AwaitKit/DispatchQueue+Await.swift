@@ -63,23 +63,24 @@ extension Extension where Base: DispatchQueue {
     var result: T?
     var error: Swift.Error?
 
-    let semaphore = DispatchSemaphore(value: 0)
+    let group = DispatchGroup()
+    group.enter()
 
     promise
       .then(on: self.base) { value -> Promise<Void> in
         result = value
 
-        semaphore.signal()
+        group.leave()
 
         return Promise()
       }
       .catch(on: self.base, policy: .allErrors) { err in
         error = err
 
-        semaphore.signal()
+        group.leave()
       }
 
-    _ = semaphore.wait(timeout: .distantFuture)
+    group.wait()
 
     guard let unwrappedResult = result else {
       throw error!
