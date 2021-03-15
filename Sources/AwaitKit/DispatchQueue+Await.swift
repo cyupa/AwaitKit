@@ -80,10 +80,15 @@ extension Extension where Base: DispatchQueue {
         group.leave()
       }
 
-    group.wait()
+    _ = group.wait(timeout: .now() + 20)
 
     guard let unwrappedResult = result else {
-      throw error!
+        
+        throw error ?? (NSError(domain: "com.yannickloriot.awaitkit", code: 0, userInfo: [
+          NSLocalizedDescriptionKey: "Operation timeout.",
+          NSLocalizedFailureReasonErrorKey: "The current operation timeout."
+          ]))
+        
     }
 
     return unwrappedResult
