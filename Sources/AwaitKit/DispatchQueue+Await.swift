@@ -63,26 +63,32 @@ extension Extension where Base: DispatchQueue {
     var result: T?
     var error: Swift.Error?
 
-    let semaphore = DispatchSemaphore(value: 0)
+    let group = DispatchGroup()
+    group.enter()
 
     promise
       .then(on: self.base) { value -> Promise<Void> in
         result = value
 
-        semaphore.signal()
+        group.leave()
 
         return Promise()
       }
       .catch(on: self.base, policy: .allErrors) { err in
         error = err
 
-        semaphore.signal()
+        group.leave()
       }
 
-    _ = semaphore.wait(timeout: .distantFuture)
+    _ = group.wait(timeout: .now() + 20)
 
     guard let unwrappedResult = result else {
-      throw error!
+        
+        throw error ?? (NSError(domain: "com.yannickloriot.awaitkit", code: 0, userInfo: [
+          NSLocalizedDescriptionKey: "Operation timeout.",
+          NSLocalizedFailureReasonErrorKey: "The current operation timeout."
+          ]))
+        
     }
 
     return unwrappedResult
