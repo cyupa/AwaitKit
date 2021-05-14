@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/cyupa89/AwaitKit.git', :tag => s.version }
   s.screenshot       = 'http://yannickloriot.com/resources/AwaitKit-Arista-Banner.png'
 
-  s.ios.deployment_target     = '8.0'
+  s.ios.deployment_target     = '12.0'
   s.osx.deployment_target     = '10.11'
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target    = '9.0'
